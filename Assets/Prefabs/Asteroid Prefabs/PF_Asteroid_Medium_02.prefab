@@ -1532,6 +1532,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PF_Asteroid_Medium_02
       objectReference: {fileID: 0}
+    - target: {fileID: 7119591126143083986, guid: aa21c072a32eca149a4f7f99f3b47f1d, type: 3}
+      propertyPath: m_size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7458655119791761607, guid: aa21c072a32eca149a4f7f99f3b47f1d, type: 3}
       propertyPath: m_Mass
       value: 50

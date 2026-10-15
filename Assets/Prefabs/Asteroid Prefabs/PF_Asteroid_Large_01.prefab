@@ -53,8 +53,10 @@ MonoBehaviour:
     y: -35
     width: 120
     height: 70
-  m_forcePower: 10
-  m_angularPower: 180
+  m_health: 3
+  m_forcePower: 5
+  m_angularPower: 90
+  m_size: 3
 --- !u!212 &7494456580271823568
 SpriteRenderer:
   serializedVersion: 2

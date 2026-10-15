@@ -6,6 +6,9 @@ public class BoundedEntity : MonoBehaviour
     [SerializeField] protected Rect m_bounds;
     protected Rigidbody2D m_rigidbody;
 
+    [Header("Health")]
+    [SerializeField] protected int m_health;
+
     private void Awake()
     {
         m_rigidbody = GetComponent<Rigidbody2D>();

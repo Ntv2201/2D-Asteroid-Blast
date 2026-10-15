@@ -54,7 +54,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6948629600776545024, guid: aa21c072a32eca149a4f7f99f3b47f1d, type: 3}
       propertyPath: m_Name
-      value: PF_Asteroid_Large_02 Variant
+      value: PF_Asteroid_Large_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 7119591126143083986, guid: aa21c072a32eca149a4f7f99f3b47f1d, type: 3}
+      propertyPath: m_forcePower
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7119591126143083986, guid: aa21c072a32eca149a4f7f99f3b47f1d, type: 3}
+      propertyPath: m_angularPower
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 7494456580271823568, guid: aa21c072a32eca149a4f7f99f3b47f1d, type: 3}
       propertyPath: m_Sprite

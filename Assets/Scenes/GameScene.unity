@@ -289,6 +289,7 @@ MonoBehaviour:
     y: -35
     width: 120
     height: 70
+  m_health: 0
   m_turnSpeed: 2.5
   m_moveSpeed: 3.5
   m_maxMoveSpeed: 25
@@ -662,7 +663,7 @@ GameObject:
   - component: {fileID: 688273076}
   - component: {fileID: 688273075}
   m_Layer: 0
-  m_Name: Space_Background
+  m_Name: Space Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -786,17 +787,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75458d498d2fe364085dbf0168e5b12e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AsteroidManager
-  m_maxAsteroids: 10
-  m_asteroidPrefabs:
-  - {fileID: 6948629600776545024, guid: aa21c072a32eca149a4f7f99f3b47f1d, type: 3}
-  - {fileID: 752975701161018279, guid: 7e97099c290a69240aaf701c6e1d7ec3, type: 3}
-  - {fileID: 752975701161018279, guid: 4590d279500bc474881eb41f2c793a6d, type: 3}
   m_spawnArea:
     serializedVersion: 2
     x: -40
     y: -25
     width: 80
     height: 50
+  m_maxAsteroids: 10
+  m_asteroidPrefabs:
+  - {fileID: 6948629600776545024, guid: aa21c072a32eca149a4f7f99f3b47f1d, type: 3}
+  - {fileID: 752975701161018279, guid: 7e97099c290a69240aaf701c6e1d7ec3, type: 3}
+  - {fileID: 752975701161018279, guid: 4590d279500bc474881eb41f2c793a6d, type: 3}
+  - {fileID: 752975701161018279, guid: 8fbe9d4e1983e2f45ab1a17711560f0f, type: 3}
+  - {fileID: 752975701161018279, guid: 7d738d33a00290b4681af46b7693b553, type: 3}
+  - {fileID: 752975701161018279, guid: bfc5228b902bacd43b8bac74870fec8e, type: 3}
+  - {fileID: 752975701161018279, guid: 1836f75f34a24a34a8aa71f680eaefc3, type: 3}
+  - {fileID: 752975701161018279, guid: 7192eae7993181f4cadaed61e3839a1c, type: 3}
+  - {fileID: 752975701161018279, guid: 654e37635559dc24fb3a1f1fead39bfc, type: 3}
+  m_numberOfAsteroidSpawnOnDeath: 000000000800000004000000
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
