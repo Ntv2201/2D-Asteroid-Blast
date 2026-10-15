@@ -1,0 +1,26 @@
+:root {
+}
+
+.container {
+}
+
+.top-bar {
+    flex-grow: 0;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.157);
+    flex-direction: row;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-left: 25px;
+}
+
+.score-value {
+    height: 44px;
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+    -unity-font-definition: url("project://database/Assets/Fonts/Audiowide-Regular%20SDF.asset?fileID=11400000&guid=f422c333f662e204f891d5636ab2c329&type=2#Audiowide-Regular SDF");
+    -unity-font-style: normal;
+    -unity-text-align: upper-center;
+    white-space: nowrap;
+}

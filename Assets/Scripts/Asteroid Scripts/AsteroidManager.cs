@@ -8,29 +8,51 @@ using Unity.VisualScripting;
 
 public class AsteroidManager : MonoBehaviour
 {
-    [SerializeField] private Rect m_spawnArea;
+    [SerializeField] private int m_startingAsteroids;
     [SerializeField] private int m_maxAsteroids;
+    [SerializeField] private float m_asteroidSpawnDelay;
+    [SerializeField] private int m_currentAteroidCounts;
+    [SerializeField] private Rect m_spawnArea;
     [SerializeField] private List<GameObject> m_asteroidPrefabs;
     [SerializeField] private int[] m_numberOfAsteroidSpawnOnDeath;
 
     private void Start()
     {
-        StartCoroutine(SpawnAsteroidCoroutine());
+        StartCoroutine(SpawnInitialAsteroidCoroutine());
     }
 
-    private IEnumerator SpawnAsteroidCoroutine()
+    private IEnumerator SpawnInitialAsteroidCoroutine()
     {
-        for(int i = 0; i < m_maxAsteroids; i++)
+        for(int i = 0; i < m_startingAsteroids; i++)
         {
             yield return new WaitForSeconds(.1f);
 
-            Vector2 spawnPoint = new Vector2(
-                Random.Range(m_spawnArea.xMin, m_spawnArea.xMax),
-                Random.Range(m_spawnArea.yMin, m_spawnArea.yMax)
-            );
-
-            SpawnAsteroidsAtRandomPosition(3, spawnPoint);
+            SpawnAsteroidsAtRandomPosition(3, GetRandomSpawnPoint());
         }
+        StartCoroutine(AsteroidSpawnerCoroutine());
+    }
+
+    private IEnumerator AsteroidSpawnerCoroutine()
+    {
+        while(m_currentAteroidCounts >= m_maxAsteroids)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        yield return new WaitForSeconds(m_asteroidSpawnDelay);
+
+        SpawnAsteroidsAtRandomPosition(3, GetRandomSpawnPoint());
+
+        StartCoroutine(AsteroidSpawnerCoroutine());
+    }
+
+    private Vector2 GetRandomSpawnPoint()
+    {
+        Vector2 spawnPoint = new Vector2(
+            Random.Range(m_spawnArea.xMin, m_spawnArea.xMax),
+            Random.Range(m_spawnArea.yMin, m_spawnArea.yMax)
+        );
+        return spawnPoint;
     }
 
     private void SpawnAsteroidsAtRandomPosition(int size, Vector2 spawnPoint)
@@ -46,6 +68,11 @@ public class AsteroidManager : MonoBehaviour
 
         AsteroidController controller = asteroidToSpawn.GetComponent<AsteroidController>();
         controller.onAsteroidDie += OnAsteroidDie;
+        
+        if(size == 3)
+        {
+            m_currentAteroidCounts++;
+        }
     }
 
 
@@ -55,6 +82,13 @@ public class AsteroidManager : MonoBehaviour
         Vector2 asteroidSpawnPoint = asteroid.transform.position;
 
         Destroy(asteroid.gameObject);
+
+        GameEvents.Instance.AddToScore(1);
+
+        if(size == 3)
+        {
+            m_currentAteroidCounts--;
+        }
         size--;
 
         int numToSpawn = m_numberOfAsteroidSpawnOnDeath[size];
