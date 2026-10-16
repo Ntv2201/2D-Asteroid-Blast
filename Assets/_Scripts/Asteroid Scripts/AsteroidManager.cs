@@ -15,6 +15,7 @@ public class AsteroidManager : MonoBehaviour
     [SerializeField] private Rect m_spawnArea;
     [SerializeField] private List<GameObject> m_asteroidPrefabs;
     [SerializeField] private int[] m_numberOfAsteroidSpawnOnDeath;
+    [SerializeField] private GameObject m_collectiblePrefabs;
 
     private void OnEnable()
     {
@@ -31,7 +32,7 @@ public class AsteroidManager : MonoBehaviour
     {
         OnRetry();
     }
-
+    
     private IEnumerator SpawnInitialAsteroidCoroutine()
     {
         for(int i = 0; i < m_startingAsteroids; i++)
@@ -59,11 +60,35 @@ public class AsteroidManager : MonoBehaviour
 
     private Vector2 GetRandomSpawnPoint()
     {
-        Vector2 spawnPoint = new Vector2(
-            Random.Range(m_spawnArea.xMin, m_spawnArea.xMax),
-            Random.Range(m_spawnArea.yMin, m_spawnArea.yMax)
-        );
-        return spawnPoint;
+        int side = Random.Range(0, 4);
+
+        float x = 0;
+        float y = 0;
+
+        switch (side)
+        {   
+            // top 
+            case 0:
+                x = Random.Range(m_spawnArea.xMin, m_spawnArea.xMax);
+                y = m_spawnArea.yMax;
+                break;
+            // right
+            case 1:
+                x = m_spawnArea.xMax;
+                y = Random.Range(m_spawnArea.yMin, m_spawnArea.yMax);
+                break;
+            // bottom
+            case 2:
+                x = Random.Range(m_spawnArea.xMin, m_spawnArea.xMax);
+                y = m_spawnArea.yMin;   
+                break;
+            // left
+            case 3:
+                x = m_spawnArea.xMin;
+                y = Random.Range(m_spawnArea.yMin, m_spawnArea.yMax);
+                break;
+        }
+        return new Vector2(x, y);
     }
 
     private void SpawnAsteroidsAtRandomPosition(int size, Vector2 spawnPoint)
@@ -100,17 +125,29 @@ public class AsteroidManager : MonoBehaviour
         {
             m_currentAteroidCounts--;
         }
+
         size--;
 
         int numToSpawn = m_numberOfAsteroidSpawnOnDeath[size];
 
         if(size > 0)
         {
+            SpawnCollectible(asteroidSpawnPoint);
+
             for(int i = 0; i < numToSpawn; i++)
             {
                 SpawnAsteroidsAtRandomPosition(size, (Random.insideUnitCircle * 5f) + asteroidSpawnPoint);
 
             }
+        }
+    }
+
+    private void SpawnCollectible(Vector3 position)
+    {
+        if(Random.Range(0f, 1f) > .5f)
+        {
+            GameObject collectible = Instantiate(m_collectiblePrefabs, transform);
+            collectible.transform.position = position;
         }
     }
 

@@ -876,10 +876,10 @@ MonoBehaviour:
   m_currentAteroidCounts: 0
   m_spawnArea:
     serializedVersion: 2
-    x: -40
-    y: -25
-    width: 80
-    height: 50
+    x: -70
+    y: -35
+    width: 120
+    height: 70
   m_asteroidPrefabs:
   - {fileID: 6948629600776545024, guid: aa21c072a32eca149a4f7f99f3b47f1d, type: 3}
   - {fileID: 752975701161018279, guid: 7e97099c290a69240aaf701c6e1d7ec3, type: 3}
@@ -891,6 +891,7 @@ MonoBehaviour:
   - {fileID: 752975701161018279, guid: 7192eae7993181f4cadaed61e3839a1c, type: 3}
   - {fileID: 752975701161018279, guid: 654e37635559dc24fb3a1f1fead39bfc, type: 3}
   m_numberOfAsteroidSpawnOnDeath: 000000000800000004000000
+  m_collectiblePrefabs: {fileID: 717595076133024897, guid: c78a40a9ed09dfe41a006e7e3fdca36c, type: 3}
 --- !u!1 &2147080343
 GameObject:
   m_ObjectHideFlags: 0

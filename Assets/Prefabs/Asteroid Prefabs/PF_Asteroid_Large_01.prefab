@@ -49,13 +49,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AsteroidController
   m_bounds:
     serializedVersion: 2
-    x: -60
-    y: -35
-    width: 120
-    height: 70
+    x: -100
+    y: -50
+    width: 150
+    height: 100
   m_health: 3
+  m_maxHealth: 1
   m_forcePower: 5
-  m_angularPower: 90
+  m_angularPower: 45
+  m_constantPower: 1.5
   m_size: 3
 --- !u!212 &7494456580271823568
 SpriteRenderer:
