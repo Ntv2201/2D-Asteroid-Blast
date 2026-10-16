@@ -17,11 +17,28 @@ public class GameEvents
     }
 
     public event Action<int> onAddToScore;
+    public event Action onPlayerDie;
+    public event Action onGameOver;
+    public event Action onRetry;
 
-    
     public void AddToScore(int amount)
     {
         onAddToScore?.Invoke(amount);
+    }
+
+    public void OnPlayerDie()
+    {
+        onPlayerDie?.Invoke();
+    }
+
+    public void OnGameOver()
+    {
+        onGameOver?.Invoke();
+    }
+
+    public void OnRetry()
+    {
+        onRetry?.Invoke();
     }
 
 }

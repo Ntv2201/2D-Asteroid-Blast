@@ -1,17 +1,35 @@
+using Unity.Profiling;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class BoundedEntity : MonoBehaviour
 {
+    protected Rigidbody2D m_rigidbody;
+    protected SpriteRenderer m_spriteRenderer;
+    protected Collider2D m_collider;
+
     [Header("Bounds")]
     [SerializeField] protected Rect m_bounds;
-    protected Rigidbody2D m_rigidbody;
 
     [Header("Health")]
     [SerializeField] protected int m_health;
+    [SerializeField] protected int m_maxHealth = 1;
+
+    protected virtual void OnEnable()
+    {
+        ResetHealth();
+    }
+
+    protected virtual void OnDisable()
+    {
+        
+    }
 
     private void Awake()
     {
         m_rigidbody = GetComponent<Rigidbody2D>();
+        m_spriteRenderer = GetComponent<SpriteRenderer>();
+        m_collider = GetComponent<Collider2D>();
     }
 
     protected virtual void LateUpdate()
@@ -45,4 +63,25 @@ public class BoundedEntity : MonoBehaviour
             m_rigidbody.position = position;
         }
     }
+
+    protected void LoseHealth()
+    {
+        m_health--;
+        if(m_health <= 0)
+        {
+            OnDie();
+        }
+    }
+
+    protected void ResetHealth()
+    {
+        m_health = m_maxHealth;
+    }
+
+    protected virtual void OnDie()
+    {
+
+    }
+
+
 }

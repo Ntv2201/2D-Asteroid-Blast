@@ -1,10 +1,13 @@
 using System;
+using System.Collections;
 using JetBrains.Annotations;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ShipController : BoundedEntity
 {
+    
     private float m_forwarInput;
     private float m_turnInput;
     [Header("Move Settings")]
@@ -14,11 +17,27 @@ public class ShipController : BoundedEntity
     [SerializeField] private float m_stoppingPower;
 
     [Header("Bullet")]
-
     [SerializeField] private GameObject m_bulletPrefabs;
     [SerializeField] private float m_fireDelay;
     [SerializeField] private float m_fireCount;
     [SerializeField] private bool m_isFiring;
+
+    [SerializeField] private bool m_isDead;
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+        GameEvents.Instance.onRetry += OnRetry;
+
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        GameEvents.Instance.onRetry -= OnRetry;
+    }
+
 
     private void OnMove(InputValue value)
     {
@@ -35,6 +54,8 @@ public class ShipController : BoundedEntity
 
     protected override void LateUpdate()
     {
+        if(m_isDead) return;
+
         base.LateUpdate();
 
         HandleMove();
@@ -92,5 +113,58 @@ public class ShipController : BoundedEntity
             m_fireCount += Time.deltaTime;
         }
     }
-    
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.TryGetComponent(out AsteroidController asteroid))
+        {
+            LoseHealth();
+        }
+    }
+
+    protected void SetPlayerAsDead()
+    {
+        m_isDead = true;
+        m_spriteRenderer.enabled = false;
+        m_collider.enabled = false;
+        m_rigidbody.simulated = false;
+    }
+
+    protected override void OnDie()
+    {
+        base.OnDie();       
+
+        GameEvents.Instance.OnPlayerDie();
+
+        SetPlayerAsDead();
+
+        StartCoroutine(RespawnPlayerCoroutine());
+    }
+
+
+
+    private IEnumerator RespawnPlayerCoroutine()
+    {
+        yield return new WaitForSeconds(.5f);
+        m_rigidbody.position = Vector2.zero;
+        m_rigidbody.transform.position = Vector3.zero;
+        m_rigidbody.linearVelocity = Vector2.zero;
+        m_rigidbody.rotation = 0;
+        m_spriteRenderer.enabled = true;
+        ResetHealth();
+
+        yield return new WaitForSeconds(.5f);
+        m_isDead = false;
+        m_rigidbody.simulated = true;
+
+        yield return new WaitForSeconds(2f);
+        m_collider.enabled = true;
+    }
+
+    private void OnRetry()
+    {
+        SetPlayerAsDead();
+        StartCoroutine(RespawnPlayerCoroutine());
+    }
+
 }

@@ -17,4 +17,15 @@
             </ui:Label>
         </ui:VisualElement>
     </ui:VisualElement>
+    <ui:VisualElement name="GameOver" class="game-over-background hidden" style="background-color: rgba(0, 0, 0, 0.588); color: rgb(0, 0, 0);">
+        <ui:VisualElement name="CenterPanel" class="game-over-center" style="background-color: rgba(0, 0, 0, 0); color: rgb(0, 0, 0);">
+            <ui:Label text="GAME OVER" name="GameOverLabel" class="game-over-label" style="color: rgb(255, 147, 0); background-color: rgba(0, 0, 0, 0);"/>
+            <ui:VisualElement name="RetryButton" class="button" style="-unity-text-align: middle-center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Audiowide-Regular.ttf?fileID=12800000&amp;guid=5baaaa4eb3bcff04d93cb1014e6af260&amp;type=3#Audiowide-Regular&quot;); font-size: 14px;">
+                <ui:Label text="RETRY" name="ButtonLabel" class="button-label"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="QuitButton" class="button" style="-unity-text-align: middle-center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Audiowide-Regular.ttf?fileID=12800000&amp;guid=5baaaa4eb3bcff04d93cb1014e6af260&amp;type=3#Audiowide-Regular&quot;); font-size: 14px;">
+                <ui:Label text="EXIT GAME" name="ButtonLabel" class="button-label"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>

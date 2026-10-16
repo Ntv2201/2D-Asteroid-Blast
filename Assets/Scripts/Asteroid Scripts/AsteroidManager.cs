@@ -16,9 +16,20 @@ public class AsteroidManager : MonoBehaviour
     [SerializeField] private List<GameObject> m_asteroidPrefabs;
     [SerializeField] private int[] m_numberOfAsteroidSpawnOnDeath;
 
+    private void OnEnable()
+    {
+        GameEvents.Instance.onGameOver += OnGameOver;
+        GameEvents.Instance.onRetry += OnRetry;
+    }
+    private void OnDisable()
+    {
+        GameEvents.Instance.onRetry -= OnRetry;
+        GameEvents.Instance.onGameOver -= OnGameOver;
+    }
+
     private void Start()
     {
-        StartCoroutine(SpawnInitialAsteroidCoroutine());
+        OnRetry();
     }
 
     private IEnumerator SpawnInitialAsteroidCoroutine()
@@ -101,7 +112,21 @@ public class AsteroidManager : MonoBehaviour
 
             }
         }
+    }
 
+    private void OnRetry()
+    {
+        foreach(Transform t in transform)
+        {
+            Destroy(t.gameObject);
+        }
+        StartCoroutine(SpawnInitialAsteroidCoroutine());
+    }
+
+    private void OnGameOver()
+    {
+        StopAllCoroutines();
+        m_currentAteroidCounts = 0;
     }
 
 }

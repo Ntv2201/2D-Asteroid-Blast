@@ -17,12 +17,17 @@ public class ScoreManager : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.Instance.onAddToScore += AddScore;
+        GameEvents.Instance.onPlayerDie += OnPlayerDie;
+        GameEvents.Instance.onRetry += OnRetry;
     }
 
     private void OnDisable()
     {
         GameEvents.Instance.onAddToScore -= AddScore;
+        GameEvents.Instance.onPlayerDie -= OnPlayerDie;
+        GameEvents.Instance.onRetry -= OnRetry;
     }
+
 
     /// <summary>
     /// adds an amount to the current score
@@ -45,6 +50,22 @@ public class ScoreManager : MonoBehaviour
     {
         m_score = 0;
         m_currentLives = m_maxLives;
+    }
+
+    private void OnPlayerDie()
+    {
+        m_currentLives--;
+        if(m_currentLives <= 0)
+        {
+            GameEvents.Instance.OnGameOver();
+            Time.timeScale = 0; 
+        }
+    }
+
+    private void OnRetry()
+    {
+        Time.timeScale = 1;
+        ClearScore();
     }
 
 }

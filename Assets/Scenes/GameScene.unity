@@ -338,6 +338,7 @@ MonoBehaviour:
     width: 120
     height: 70
   m_health: 0
+  m_maxHealth: 3
   m_turnSpeed: 2.5
   m_moveSpeed: 3.5
   m_maxMoveSpeed: 25
@@ -346,6 +347,7 @@ MonoBehaviour:
   m_fireDelay: 0.1
   m_fireCount: 0
   m_isFiring: 0
+  m_isDead: 0
 --- !u!60 &412989877
 PolygonCollider2D:
   m_ObjectHideFlags: 0
