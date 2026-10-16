@@ -1,8 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class AsteroidController : BoundedEntity
 {
+    [Header("Death VFX")]
+    [SerializeField] private GameObject m_asteroidDeathVFX;
+
     [SerializeField] private float m_forcePower; 
     [SerializeField] private float m_angularPower;
     [SerializeField] private float m_constantPower;
@@ -33,6 +37,8 @@ public class AsteroidController : BoundedEntity
     protected override void OnDie()
     {
         base.OnDie();
+
+        SpawnVFX(m_asteroidDeathVFX);
         onAsteroidDie ?.Invoke(this);
 
     }
