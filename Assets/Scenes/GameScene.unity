@@ -165,6 +165,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
   m_score: 0
   m_topScore: 0
+  m_currentLives: 0
+  m_maxLives: 3
 --- !u!1 &412989871
 GameObject:
   m_ObjectHideFlags: 0

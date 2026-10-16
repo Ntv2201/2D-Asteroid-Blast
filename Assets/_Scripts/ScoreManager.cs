@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class ScoreManager : MonoBehaviour
 {
     [Header("Score Manager")]
     [SerializeField] private int m_score;
     [SerializeField] private int m_topScore;
+    [SerializeField] private int m_currentLives;
+    [SerializeField] private int m_maxLives;
 
     private void Awake()
     {
@@ -41,6 +44,7 @@ public class ScoreManager : MonoBehaviour
     public void ClearScore()
     {
         m_score = 0;
+        m_currentLives = m_maxLives;
     }
 
 }

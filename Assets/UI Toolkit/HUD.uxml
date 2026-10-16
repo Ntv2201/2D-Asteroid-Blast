@@ -1,11 +1,18 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Styles/BaseStyles.uss?fileID=7433441132597879392&amp;guid=8bd749dfcb233ad489b00ff7b1606b19&amp;type=3#BaseStyles"/>
-    <ui:VisualElement name="Container" class="container">
+    <ui:VisualElement name="Container" class="container" style="padding-right: 25px;">
         <ui:VisualElement name="TopBar" class="top-bar" style="padding-top: 0; background-color: rgba(0, 0, 0, 0.235);">
             <ui:Label text="Score:" name="ScoreLabel" class="score-label" style="height: 44px; color: rgb(255, 255, 255); font-size: 30px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Audiowide-Regular%20SDF.asset?fileID=11400000&amp;guid=f422c333f662e204f891d5636ab2c329&amp;type=2#Audiowide-Regular SDF&quot;); -unity-font-style: bold; -unity-text-align: middle-left; padding-left: 25px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;"/>
             <ui:Label text="000" name="ScoreValue" data-source-type="ScoreManager, Assembly-CSharp" class="score-value" style="-unity-font-style: normal; font-size: 30px; -unity-text-align: upper-center;">
                 <Bindings>
                     <ui:DataBinding property="text" data-source-path="m_score" binding-mode="ToTarget"/>
+                </Bindings>
+            </ui:Label>
+            <ui:VisualElement name="Spacer" style="flex-grow: 1;"/>
+            <ui:VisualElement name="LivesIcon" class="lives-icon" style="flex-grow: 0; width: 50px; background-image: url(&quot;project://database/Assets/Asteroids%20Project%20Assets/Sprites/ship.png?fileID=21300000&amp;guid=01943d3552ba8bb468b153c2a292e784&amp;type=3#ship&quot;); -unity-background-scale-mode: scale-to-fit; margin-right: 5px; margin-top: 5px; -unity-text-align: lower-left;"/>
+            <ui:Label text="3" name="LivesValue" data-source-type="ScoreManager, Assembly-CSharp" class="score-value" style="-unity-font-style: normal; font-size: 30px; -unity-text-align: upper-center; margin-right: 5px;">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="m_currentLives" binding-mode="ToTarget"/>
                 </Bindings>
             </ui:Label>
         </ui:VisualElement>
