@@ -66,6 +66,7 @@ public class BoundedEntity : MonoBehaviour
 
     protected void LoseHealth()
     {
+        
         m_health--;
         if(m_health <= 0)
         {
@@ -85,7 +86,7 @@ public class BoundedEntity : MonoBehaviour
     }
     protected virtual void OnDie()
     {
-
+        
     }
 
 

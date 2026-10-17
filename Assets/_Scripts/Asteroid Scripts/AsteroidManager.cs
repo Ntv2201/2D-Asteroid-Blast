@@ -37,7 +37,7 @@ public class AsteroidManager : MonoBehaviour
     {
         for(int i = 0; i < m_startingAsteroids; i++)
         {
-            yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(3f);
 
             SpawnAsteroidsAtRandomPosition(3, GetRandomSpawnPoint());
         }

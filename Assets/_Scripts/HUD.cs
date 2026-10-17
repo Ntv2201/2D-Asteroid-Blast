@@ -7,17 +7,18 @@ public class HUD : MonoBehaviour
 {
     [SerializeField] ScoreManager m_scoreManager;
     private UIDocument m_uiDocument;
-
     private VisualElement m_gameOverScreen;
-    
+
+    [SerializeField] private SoundFXHandler m_focusSound;
+    [SerializeField] private SoundFXHandler m_submitSound;
 
     private void OnEnable()
     {
         m_uiDocument = gameObject.GetComponent<UIDocument>();
         VisualElement root = m_uiDocument.rootVisualElement;
 
-        VisualElement topBar = root.Q<VisualElement>("TopBar");
-        topBar.dataSource = m_scoreManager;
+        VisualElement container = root.Q<VisualElement>("Container");
+        container.dataSource = m_scoreManager;
         
         m_gameOverScreen = root.Q<VisualElement>("GameOver");
 
@@ -34,6 +35,9 @@ public class HUD : MonoBehaviour
 
         retryButton.AddManipulator(retryClickable);
         quitButton.AddManipulator(quitClickable);
+
+        retryButton.AddManipulator(new UISoundManipulator(m_focusSound, m_submitSound));
+        quitButton.AddManipulator(new UISoundManipulator(m_focusSound, m_submitSound));
 
         GameEvents.Instance.onGameOver += OnGameOver;
 
@@ -63,6 +67,7 @@ public class HUD : MonoBehaviour
     private void OnGameOver()
     {
         m_gameOverScreen.RemoveFromClassList("hidden");
+    
     }
 
 }

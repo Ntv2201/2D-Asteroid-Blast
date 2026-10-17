@@ -9,7 +9,7 @@ public class CollectibleController : MonoBehaviour
     {
         if(collision.TryGetComponent(out ShipController controller))
         {
-            GameEvents.Instance.AddToScore(m_pickUpScore);
+            GameEvents.Instance.AddToScore(m_pickUpScore, true);
             Destroy(gameObject);
         }
     }

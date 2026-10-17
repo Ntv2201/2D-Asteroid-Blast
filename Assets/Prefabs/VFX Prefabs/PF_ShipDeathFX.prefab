@@ -132,4 +132,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VFXCleanUpHandler
   m_currentLifeTime: 0
-  m_maxLifeTime: 3
+  m_maxLifeTime: 1.5

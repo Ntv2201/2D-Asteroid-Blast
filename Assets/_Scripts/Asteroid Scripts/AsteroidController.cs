@@ -16,6 +16,7 @@ public class AsteroidController : BoundedEntity
 
     public event Action<AsteroidController> onAsteroidDie;
 
+
     private void Start()
     {
         m_rigidbody.AddForce(UnityEngine.Random.insideUnitCircle * m_rigidbody.mass * m_forcePower, ForceMode2D.Impulse);
@@ -31,7 +32,10 @@ public class AsteroidController : BoundedEntity
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        LoseHealth();
+        if (collision.gameObject.TryGetComponent(out Bullet bullet))
+        {
+            LoseHealth();
+        }
     }
 
     protected override void OnDie()

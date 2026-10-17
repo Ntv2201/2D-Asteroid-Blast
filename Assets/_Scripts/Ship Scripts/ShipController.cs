@@ -29,6 +29,18 @@ public class ShipController : BoundedEntity
     [SerializeField] private VisualEffect m_leftBoostFX;
     [SerializeField] private VisualEffect m_rightBoostFX;
     [SerializeField] private GameObject m_shieldFX;
+    [SerializeField] private Material m_fullScreenFX;
+    [SerializeField] private AnimationCurve m_fullScreenEase;
+    [SerializeField] private float m_easeTime;
+    [SerializeField] private bool m_isRunningRoutine;
+    private Coroutine m_currentHitCoroutine;
+
+    [Header("Sound FX")]
+    [SerializeField] private SoundFXHandler m_fireSFX;
+    [SerializeField] private SoundFXHandler m_hitSFX;
+    [SerializeField] private SoundFXHandler m_dieSFX;
+    [SerializeField] private SoundFXHandler m_thrustSFX;
+    [SerializeField] private SoundFXHandler m_boostSFX;
 
     [Header("Bullet")]
     [SerializeField] private GameObject m_bulletPrefabs;
@@ -42,15 +54,15 @@ public class ShipController : BoundedEntity
         base.OnEnable();
 
         GameEvents.Instance.onRetry += OnRetry;
-
+        ResetFullScreenFX();
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
         GameEvents.Instance.onRetry -= OnRetry;
+        ResetFullScreenFX();
     }
-
 
     private void OnMove(InputValue value)
     {
@@ -61,11 +73,13 @@ public class ShipController : BoundedEntity
 
         if(m_forwarInput > 0 )
         {
+            m_thrustSFX.FadeIn();
             EnableBoostFX(true, true);
         }
         else
         {
             EnableBoostFX(false, false);
+            m_thrustSFX.FadeOut();
         }
 
     }
@@ -81,9 +95,15 @@ public class ShipController : BoundedEntity
 
         if (m_isBoosting)
         {
+            m_boostSFX.FadeIn();
             EnableBoostFX(true, true);
         }
-        else if(m_forwarInput == 0)
+        else
+        {
+            m_boostSFX.FadeOut();
+        }
+        
+        if(!m_isBoosting && m_forwarInput == 0)
         {
             EnableBoostFX(false, false);
         }
@@ -137,8 +157,6 @@ public class ShipController : BoundedEntity
             m_rigidbody.linearVelocity = m_rigidbody.linearVelocity.normalized * m_maxMoveSpeed;
         }
         
-
-
         if (m_isFiring)
         {
             TrySpawnBullet();
@@ -158,6 +176,8 @@ public class ShipController : BoundedEntity
             GameObject bullet = Instantiate(m_bulletPrefabs);
             bullet.transform.position = transform.position + (transform.up * 3f);
             bullet.transform.up = transform.up;
+
+            m_fireSFX.PlaySound();
         }
         else
         {
@@ -168,11 +188,23 @@ public class ShipController : BoundedEntity
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(m_isInvulnerable) return;
+
+        StartCoroutine(InvulnerableRoutine());
         
         if(collision.gameObject.TryGetComponent(out AsteroidController asteroid))
         {
+            m_hitSFX.PlaySound();
+            PlayHitFullScreenFX();
             LoseHealth();
         }
+    }
+
+    private IEnumerator InvulnerableRoutine()
+    {
+        m_isInvulnerable = true;
+
+        yield return new WaitForSeconds(3f);
+        m_isInvulnerable = false;
     }
 
     protected void SetPlayerAsDead()
@@ -189,14 +221,16 @@ public class ShipController : BoundedEntity
 
         GameEvents.Instance.OnPlayerDie();
 
+        m_dieSFX.PlaySound();
+
         SpawnVFX(m_deathVFXPrefab);
 
         SetPlayerAsDead();
 
-        StartCoroutine(RespawnPlayerCoroutine());
+        StartCoroutine(RespawnPlayerRoutine());
     }
 
-    private IEnumerator RespawnPlayerCoroutine()
+    private IEnumerator RespawnPlayerRoutine()
     {
         yield return new WaitForSeconds(1f);
 
@@ -220,13 +254,65 @@ public class ShipController : BoundedEntity
     private void OnRetry()
     {
         SetPlayerAsDead();
-        StartCoroutine(RespawnPlayerCoroutine());
+        StartCoroutine(RespawnPlayerRoutine());
     }
 
     private void EnableBoostFX(bool left, bool right)
     {
         m_leftBoostFX.enabled = left;
         m_rightBoostFX.enabled = right;
+    }
+
+    private void PlayHitFullScreenFX()
+    {
+        if (m_isRunningRoutine) return;
+
+        StartCoroutine(HitFullScreenFXRoutine());
+    }
+
+    private IEnumerator HitFullScreenFXRoutine()
+    {
+        m_isRunningRoutine = true;
+        try
+        {
+            float time = 0f;
+        
+            while(time < 1f)
+            {
+                yield return new WaitForSeconds(m_easeTime/100);
+                time += 0.01f;    
+                m_fullScreenFX.SetFloat("_Amount", m_fullScreenEase.Evaluate(time));
+            }
+
+            while(time > 0f)
+            {
+                yield return new WaitForSeconds(m_easeTime/100);
+                time -= 0.01f;    
+                m_fullScreenFX.SetFloat("_Amount", m_fullScreenEase.Evaluate(time));
+            }
+        }
+        finally
+        {
+            m_isRunningRoutine = false;
+        }
+        
+    }
+
+    public void ResetFullScreenFX()
+    {
+        if (m_currentHitCoroutine != null)
+        {
+            StopCoroutine(m_currentHitCoroutine);
+            m_currentHitCoroutine = null;
+        }
+
+        m_isRunningRoutine = false;
+
+        // Trả material/shader về trạng thái gốc (Amount = 0)
+        if (m_fullScreenFX != null)
+        {
+            m_fullScreenFX.SetFloat("_Amount", 0f);
+        }
     }
 
 }

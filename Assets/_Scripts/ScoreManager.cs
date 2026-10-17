@@ -8,6 +8,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private int m_topScore;
     [SerializeField] private int m_currentLives;
     [SerializeField] private int m_maxLives;
+    [SerializeField] private SoundFXHandler m_collectibleSound;
 
     private void Awake()
     {
@@ -33,13 +34,17 @@ public class ScoreManager : MonoBehaviour
     /// adds an amount to the current score
     /// </summary>
     /// <param name="amount">How much we want to add</param>
-    public void AddScore(int amount = 1)
+    public void AddScore(int amount = 1, bool playSound = false)
     {
         m_score += amount;
 
         if(m_topScore < m_score)
         {
             m_topScore = m_score;
+        }
+        if (playSound)
+        {
+            m_collectibleSound.PlaySound();
         }
     }
 

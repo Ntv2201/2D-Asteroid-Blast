@@ -16,14 +16,14 @@ public class GameEvents
         }
     }
 
-    public event Action<int> onAddToScore;
+    public event Action<int, bool> onAddToScore;
     public event Action onPlayerDie;
     public event Action onGameOver;
     public event Action onRetry;
 
-    public void AddToScore(int amount)
+    public void AddToScore(int amount = 1, bool playSound = false)
     {
-        onAddToScore?.Invoke(amount);
+        onAddToScore?.Invoke(amount, playSound);
     }
 
     public void OnPlayerDie()

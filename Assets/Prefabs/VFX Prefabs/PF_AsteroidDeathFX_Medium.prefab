@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -381342194969032436, guid: f99a0e04c09bd694fa23b20a14e2ce23, type: 3}
       propertyPath: m_maxLifeTime
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1227227907923582286, guid: f99a0e04c09bd694fa23b20a14e2ce23, type: 3}
       propertyPath: m_Name
