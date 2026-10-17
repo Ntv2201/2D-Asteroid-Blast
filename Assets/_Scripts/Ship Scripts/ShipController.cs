@@ -189,21 +189,23 @@ public class ShipController : BoundedEntity
     {
         if(m_isInvulnerable) return;
 
-        StartCoroutine(InvulnerableRoutine());
-        
         if(collision.gameObject.TryGetComponent(out AsteroidController asteroid))
         {
+            StartCoroutine(InvulnerableRoutine());
             m_hitSFX.PlaySound();
             PlayHitFullScreenFX();
             LoseHealth();
+            
         }
     }
 
     private IEnumerator InvulnerableRoutine()
     {
+        yield return new WaitForSeconds(.3f);
+
         m_isInvulnerable = true;
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         m_isInvulnerable = false;
     }
 
@@ -247,8 +249,8 @@ public class ShipController : BoundedEntity
         m_isInvulnerable = true;
 
         yield return new WaitForSeconds(3f);
-        m_isInvulnerable = false;
         m_shieldFX.SetActive(false);
+        m_isInvulnerable = false;
     }
 
     private void OnRetry()
@@ -279,14 +281,14 @@ public class ShipController : BoundedEntity
         
             while(time < 1f)
             {
-                yield return new WaitForSeconds(m_easeTime/100);
+                yield return new WaitForSeconds(m_easeTime/100f);
                 time += 0.01f;    
                 m_fullScreenFX.SetFloat("_Amount", m_fullScreenEase.Evaluate(time));
             }
 
             while(time > 0f)
             {
-                yield return new WaitForSeconds(m_easeTime/100);
+                yield return new WaitForSeconds(m_easeTime/100f);
                 time -= 0.01f;    
                 m_fullScreenFX.SetFloat("_Amount", m_fullScreenEase.Evaluate(time));
             }

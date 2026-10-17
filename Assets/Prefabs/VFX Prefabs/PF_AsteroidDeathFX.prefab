@@ -198,7 +198,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -296,6 +296,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoundFXHandler
   m_generators:
   - {fileID: 8300000, guid: b74ed647ce045ed4e8d2ec4176732848, type: 3}
+  - {fileID: 8300000, guid: d53ddb778e1232745bf92f309365ca0e, type: 3}
+  - {fileID: 8300000, guid: 580e3f848aa740540a0991c452789842, type: 3}
+  - {fileID: 8300000, guid: 12edc9deffc2e9245a95620a0fc91737, type: 3}
   m_minMaxPitch: {x: 0.95, y: 1.05}
   m_audioSource:
   - {fileID: 453050257188633230}
